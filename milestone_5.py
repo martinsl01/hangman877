@@ -1,5 +1,5 @@
 import random
-word_list = ['florida', 'kansas', 'arizona', 'kentucky', 'colorado']
+
 list_of_guesses = []
 class Hangman:
     def __init__(self, word_list, num_lives=5): 
@@ -17,15 +17,17 @@ class Hangman:
         guess.lower()
         if guess in list(self.word):
             print(f"Good guess! {guess} is in the word.")
+            print(self.word_guessed)
         else:
-            self.num_lives - 1
+            self.num_lives -= 1
             print(f"Sorry, {guess} is not in the word. Try again.") 
             print(f"You have {self.num_lives} lives left.")
 
-        for index, char in enumerate(list(self.words)):
+        for index, char in enumerate(self.word):
             if char == guess:
                 self.word_guessed[index] = char
-        self.num_letters - 1
+                print(char)
+                self.num_letters -= 1
 
     def ask_for_input(self):
         '''This function helps to ask the player for a guess and it then directs the check
@@ -42,21 +44,18 @@ class Hangman:
                         break
                 else:
                     print("Invalid letter. Please, enter a single alphabetical character."  )
-                    guess = input('Guess a single letter\n>>> ')
 
-    def play_game(word_list):
-        num_lives = 5
-        game = Hangman()
-        game(word_list, num_lives)
-        while True:
-            if num_lives == 0:
-                print("You lost!")
-            
-            if Hangman.num_letters > 0:
-                print(Hangman.ask_for_input())
-            if num_lives > 0  and Hangman.num_letters == 0: 
-                print('Congratulations. You won the game!')
-
-
-play_game = Hangman.play_game(word_list)
+def play_game():
+    num_lives = 5
+    word_list = ['florida', 'kansas', 'arizona', 'kentucky', 'colorado']
+    game = Hangman(word_list)
+    while True:
+        if num_lives == 0:
+            print("You lost!")
+        
+        if game.num_letters > 0:
+            print(game.ask_for_input())
+        if num_lives > 0  and game.num_letters == 0: 
+            print('Congratulations. You won the game!')
+            break
 play_game()
